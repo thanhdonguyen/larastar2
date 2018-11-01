@@ -150,8 +150,12 @@
             }
         },
 
+        beforeCreate() {
+            this.$Progress.start()
+        },
+
         mounted() {
-            // console.log(this.loadUsers())
+            this.$Progress.finish()
         },
 
         methods: {

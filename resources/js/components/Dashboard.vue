@@ -16,20 +16,11 @@
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
-        },
-        created() {
+        beforeCreate() {
             this.$Progress.start()
-
-            this.$router.beforeEach((to, from, next) => {
-                this.$Progress.start()
-                next()
-            })
-
-            this.$router.afterEach((to, from) => {
-                this.$Progress.finish()
-            })
         },
+        mounted(){
+            this.$Progress.finish()
+        }
     }
 </script>

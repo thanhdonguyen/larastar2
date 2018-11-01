@@ -70305,22 +70305,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    },
-    created: function created() {
-        var _this = this;
-
+    beforeCreate: function beforeCreate() {
         this.$Progress.start();
-
-        this.$router.beforeEach(function (to, from, next) {
-            _this.$Progress.start();
-            next();
-        });
-
-        this.$router.afterEach(function (to, from) {
-            _this.$Progress.finish();
-        });
+    },
+    mounted: function mounted() {
+        this.$Progress.finish();
     }
 });
 
@@ -70438,22 +70427,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    },
-    created: function created() {
-        var _this = this;
-
+    beforeCreate: function beforeCreate() {
         this.$Progress.start();
-
-        this.$router.beforeEach(function (to, from, next) {
-            _this.$Progress.start();
-            next();
-        });
-
-        this.$router.afterEach(function (to, from) {
-            _this.$Progress.finish();
-        });
+    },
+    mounted: function mounted() {
+        this.$Progress.finish();
     }
 });
 
@@ -70797,8 +70775,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             })
         };
     },
+    beforeCreate: function beforeCreate() {
+        this.$Progress.start();
+    },
     mounted: function mounted() {
-        // console.log(this.loadUsers())
+        this.$Progress.finish();
     },
 
 
