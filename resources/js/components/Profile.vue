@@ -142,12 +142,8 @@
         },
         methods : {
             getProfilePhoto(){
-                // axios.get("api/profile")
-                // .then(response => {
-                //     // console.log(response.data.photo)
-                //     this.form.photo = response.data.photo
-                // })
-                return "img/profile/"+this.form.photo
+                let photo = (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+this.form.photo;
+                return photo;
             },
             updateInfo(){
                 this.$Progress.start()

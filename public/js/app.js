@@ -67474,12 +67474,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         getProfilePhoto: function getProfilePhoto() {
-            // axios.get("api/profile")
-            // .then(response => {
-            //     // console.log(response.data.photo)
-            //     this.form.photo = response.data.photo
-            // })
-            return "img/profile/" + this.form.photo;
+            var photo = this.form.photo.length > 200 ? this.form.photo : "img/profile/" + this.form.photo;
+            return photo;
         },
         updateInfo: function updateInfo() {
             var _this2 = this;
