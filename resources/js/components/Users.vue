@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row mt-5" v-if="$gate.isAdmin()">
+        <div class="row mt-5" v-if="$gate.isAdminOrAuthor()">
             <div class="col-md-12">
                 <div class="card">
 
@@ -22,7 +22,7 @@
                             <th>Regitsted At</th>
                             <th style="width: 100px">Modify</th>
                         </tr>
-                        <tr v-for="user in users" :key="user.id">
+                        <tr v-for="user in users.data" :key="user.id">
                             <td>{{user.id}}.</td>
                             <td>{{user.name}}</td>
                             <td>{{user.email}}</td>
@@ -43,17 +43,21 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
-                        <ul class="pagination pagination-sm m-0 float-right">
+                        <!-- <ul class="pagination pagination-sm m-0 float-right">
                             <li class="page-item"><a class="page-link" href="#">«</a></li>
                             <li class="page-item"><a class="page-link" href="#">1</a></li>
                             <li class="page-item"><a class="page-link" href="#">2</a></li>
                             <li class="page-item"><a class="page-link" href="#">3</a></li>
                             <li class="page-item"><a class="page-link" href="#">»</a></li>
-                        </ul>
+                        </ul> -->
+                        <pagination :data="users" @pagination-change-page="getResults"></pagination>
                     </div>
 
                 </div>
             </div>
+        </div>
+        <div v-if="!$gate.isAdminOrAuthor()">
+            <not-found></not-found>
         </div>
 
         <!-- The Modal -->
@@ -159,6 +163,12 @@
         },
 
         methods: {
+            getResults(page = 1) {
+			    axios.get('api/user?page=' + page)
+				.then(response => {
+					this.users = response.data;
+				});
+		    },
             updateUser(){
                 this.$Progress.start()
                 this.form.put('api/user/' + this.form.id)
@@ -225,8 +235,8 @@
                 })
             },
             loadUsers() {
-                if(this.$gate.isAdmin()){
-                    axios.get('api/user').then(({data}) => (this.users = data.data))
+                if(this.$gate.isAdminOrAuthor()){
+                    axios.get('api/user').then(({data}) => (this.users = data))
                 }
             },
             createUser() {
@@ -250,6 +260,16 @@
         },
 
         created() {
+            Fire.$on('searching', () => {
+                let query = this.$parent.search
+                axios.get('api/findUser?q=' + query)
+                .then((data) => {
+                    this.users = data.data
+                })
+                .catch(()=> {
+
+                })
+            })
             this.loadUsers()
             Fire.$on('AfterCreate',() => {
                 this.loadUsers();

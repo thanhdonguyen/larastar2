@@ -5,6 +5,7 @@ import Developer from '../components/Developer'
 import Profile from '../components/Profile'
 import Index from '../components/app1/Index'
 import Users from '../components/Users'
+import NotFound from '../components/NotFound'
 
 
 Vue.use(Router)
@@ -32,5 +33,9 @@ export default new Router({
             path: '/users', 
             component: Users
         },
+        {
+            path: '*',
+            component: NotFound
+        }
     ]
 })

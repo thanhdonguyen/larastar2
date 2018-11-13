@@ -54,14 +54,24 @@ Vue.component(
 );
 
 Vue.component(
-    'passport-personal-access-tokens',
-    require('./components/passport/PersonalAccessTokens.vue')
+    'not-found',
+    require('./components/NotFound')
 );
+
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 window.Fire = new Vue();
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    data: {
+        search: ''
+    },
+    methods: {
+        searchit: _.debounce(() => {
+            Fire.$emit('searching')
+        },1000)
+    }
 });
 
